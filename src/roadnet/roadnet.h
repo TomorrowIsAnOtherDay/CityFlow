@@ -259,6 +259,8 @@ namespace CityFlow {
 
         double getMaxSpeed() const { return maxSpeed; }
 
+        void setMaxSpeed(double speed) { maxSpeed = speed;}
+
         size_t getVehicleCount() const { return vehicles.size(); }
 
         DrivableType getDrivableType() const { return drivableType; }
@@ -520,6 +522,10 @@ namespace CityFlow {
         }
 
         const std::vector<Lane *> &getLanes() const {
+            return lanes;
+        }
+
+        std::vector<Lane *> &getMutableLanes() {
             return lanes;
         }
 

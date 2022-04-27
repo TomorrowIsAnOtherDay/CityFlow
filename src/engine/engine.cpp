@@ -629,8 +629,21 @@ namespace CityFlow {
         std::map<std::string, int> ret;
         for (const Lane *lane : roadnet.getLanes()) {
             ret.emplace(lane->getId(), lane->getVehicleCount());
+            auto road = lane->getBelongRoad();
+            //std::cout << "lane_id: " << lane->getId() << " road_id: " << road->getId() << std::endl;
         }
         return ret;
+    }
+
+    void Engine::setRoadMaxSpeed(const std::string& id, double speed) {
+      std::cout << "Hello, This is bo." << " I received road: " << id << " speed: " << speed << std::endl;
+      for (Lane *lane : roadnet.getMutableLanes()) {
+            auto road = lane->getBelongRoad();
+            if (road->getId() == id) {
+              //std:: cout << "FFFFFFFFound!" << std::endl;
+              lane->setMaxSpeed(speed);
+            }
+      }
     }
 
     std::map<std::string, int> Engine::getLaneWaitingVehicleCount() const {

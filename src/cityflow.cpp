@@ -35,7 +35,8 @@ PYBIND11_MODULE(cityflow, m) {
         .def("load", &CityFlow::Engine::load, "archive"_a)
         .def("snapshot", &CityFlow::Engine::snapshot)
         .def("load_from_file", &CityFlow::Engine::loadFromFile, "path"_a)
-        .def("set_vehicle_route", &CityFlow::Engine::setRoute, "vehicle_id"_a, "route"_a);
+        .def("set_vehicle_route", &CityFlow::Engine::setRoute, "vehicle_id"_a, "route"_a)
+        .def("set_road_max_speed", &CityFlow::Engine::setRoadMaxSpeed, "road_id"_a, "max_speed"_a);
 
     py::class_<CityFlow::Archive>(m, "Archive")
         .def(py::init<const CityFlow::Engine&>())

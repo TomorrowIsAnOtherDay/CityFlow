@@ -168,6 +168,8 @@ namespace CityFlow {
 
         void setVehicleSpeed(const std::string &id, double speed);
 
+        void setRoadMaxSpeed(const std::string &id, double speed);
+
         void setRandomSeed(int seed) { rnd.seed(seed); }
         
         void reset(bool resetRnd = false);
