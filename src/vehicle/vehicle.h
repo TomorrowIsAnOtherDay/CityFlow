@@ -361,7 +361,7 @@ namespace CityFlow {
 
         Flow *getFlow() { return flow; }
 
-        bool setRoute(const std::vector<Road *> &anchor);
+        bool setRoute(const std::vector<Road *> &anchor, const std::string& road_id="");
 
         std::map<std::string, std::string> getInfo() const;
 

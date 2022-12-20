@@ -73,11 +73,11 @@ namespace CityFlow {
             this->vehicle = vehicle;
         }
 
-        bool dijkstra(Road *start, Road *end, std::vector<Road *> &buffer);
+        bool dijkstra(Road *start, Road *end, std::vector<Road *> &buffer, const std::string& road_id);
 
-        bool updateShortestPath();
+        bool updateShortestPath(const std::string& road_id="");
 
-        bool setRoute(const std::vector<Road *> &anchor);
+        bool setRoute(const std::vector<Road *> &anchor, const std::string& road_id);
 
         std::vector<Road *> getFollowingRoads() const;
     };

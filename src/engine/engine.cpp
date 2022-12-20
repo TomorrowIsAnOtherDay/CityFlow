@@ -862,7 +862,7 @@ namespace CityFlow {
         }
     }
 
-    bool Engine::setRoute(const std::string &vehicle_id, const std::vector<std::string> &anchor_id) {
+    bool Engine::setRoute(const std::string &vehicle_id, const std::vector<std::string> &anchor_id, const std::string& road_id) {
         auto vehicle_itr = vehicleMap.find(vehicle_id);
         if (vehicle_itr == vehicleMap.end()) return false;
         Vehicle *vehicle = vehicle_itr->second;
@@ -875,7 +875,7 @@ namespace CityFlow {
             anchors.emplace_back(anchor);
         }
 
-        return vehicle->setRoute(anchors);
+        return vehicle->setRoute(anchors, road_id);
     }
 
     std::map<std::string, std::string> Engine::getVehicleInfo(const std::string &id) const {

@@ -157,7 +157,7 @@ namespace CityFlow {
     }
 
 
-    bool Router::dijkstra(Road *start, Road *end, std::vector<Road *> &buffer) {
+    bool Router::dijkstra(Road *start, Road *end, std::vector<Road *> &buffer, const std::string& road_id) {
         std::map<Road *, double> dis;
         std::map<Road *, Road *> from;
         std::set<Road *>         visited;
@@ -170,6 +170,7 @@ namespace CityFlow {
 
         dis[start] = 0;
         queue.push(std::make_pair(start, 0));
+        //if (road_id != "") {std::cout << "road_id:" << road_id << std::endl;}
         while (!queue.empty()) {
             auto curRoad = queue.top().first;
             if (curRoad == end) {
@@ -183,6 +184,7 @@ namespace CityFlow {
             dis[curRoad] = curDis;
             for (const auto &adjRoad : curRoad->getEndIntersection().getRoads()) {
                 if (!curRoad->connectedToRoad(adjRoad)) continue;
+                if (adjRoad->getId() == road_id) continue;
                 auto iter = dis.find(adjRoad);
                 double newDis;
 
@@ -225,7 +227,7 @@ namespace CityFlow {
         return success;
     }
 
-    bool Router::updateShortestPath() {
+    bool Router::updateShortestPath(const std::string& road_id) {
         //Dijkstra
         planned.clear();
         route.clear();
@@ -233,7 +235,7 @@ namespace CityFlow {
         for (size_t i = 1 ; i < anchorPoints.size() ; ++i){
             if (anchorPoints[i - 1] == anchorPoints[i])
                 continue;
-            if (!dijkstra(anchorPoints[i - 1], anchorPoints[i], route))
+            if (!dijkstra(anchorPoints[i - 1], anchorPoints[i], route, road_id))
                 return false;
         }
         if (route.size() <= 1)
@@ -242,7 +244,7 @@ namespace CityFlow {
         return true;
     }
 
-    bool Router::setRoute(const std::vector<Road *> &anchor) {
+    bool Router::setRoute(const std::vector<Road *> &anchor, const std::string& road_id) {
         if (vehicle->getCurDrivable()->isLaneLink()) return false;
         Road *cur_road = *iCurRoad;
         auto backup = std::move(anchorPoints);
@@ -250,7 +252,7 @@ namespace CityFlow {
         anchorPoints.clear();
         anchorPoints.emplace_back(cur_road);
         anchorPoints.insert(anchorPoints.end(), anchor.begin(), anchor.end());
-        bool result = updateShortestPath();
+        bool result = updateShortestPath(road_id);
         if (result && onValidLane()) {
             return true;
         } else {

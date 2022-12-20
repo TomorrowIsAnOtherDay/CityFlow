@@ -427,8 +427,8 @@ namespace CityFlow {
         routeValid = controllerInfo.router.updateShortestPath();
     }
 
-    bool Vehicle::setRoute(const std::vector<Road *> &anchor) {
-        return controllerInfo.router.setRoute(anchor);
+    bool Vehicle::setRoute(const std::vector<Road *> &anchor, const std::string& road_id) {
+        return controllerInfo.router.setRoute(anchor, road_id);
     }
 
 
